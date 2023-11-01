@@ -11,6 +11,21 @@ from langchain.vectorstores import Chroma
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import ConversationalRetrievalChain
+import langid
+from deep_translator import GoogleTranslator
+
+# to feed into the LLM model
+def translateToEnglish(text: str) -> str:
+    source = langid.classify(text)[0]
+    #bergali => bangla
+    if source == 'zh':
+        source = 'zh-CN'
+    if source == "en":
+        return text
+
+    answer = GoogleTranslator(source=source, target="en").translate(text)
+    return answer
+
 
 def getResponse(question: str) -> str:
     """
@@ -18,6 +33,10 @@ def getResponse(question: str) -> str:
     This code is purposely built to be inefficient! 
     Refer to project requirements and Week 5 Lab if you need help
     """
+
+    #detect language (if it is not english, translate to english)
+    question = translateToEnglish(question)
+    print(question)
 
     load_dotenv('./.env')
 
@@ -38,14 +57,13 @@ def getResponse(question: str) -> str:
     # Your experiment can start from this code block which loads the vector store into variable vectordb
     embedding = OpenAIEmbeddings()
 
-    # Reference https://github.com/hwchase17/chroma-langchain/blob/master/persistent-qa.ipynb
     persist_directory = './docs/vectordb'
 
     # Perform embeddings and store the vectors
     vectordb = Chroma.from_documents(
         documents=splits,
         embedding=embedding,
-        persist_directory=persist_directory # Writes to local directory in G Drive
+        persist_directory=persist_directory 
     )
 
     memory = ConversationBufferMemory(
@@ -64,7 +82,6 @@ def getResponse(question: str) -> str:
     retriever=vectordb.as_retriever(search_type="similarity_score_threshold", search_kwargs={"score_threshold": .5, "k": 5})
 
     # Define llm model
-
     llm_name = "gpt-3.5-turbo-16k"
     llm = ChatOpenAI(model_name=llm_name, temperature=0)
     # Define template prompt
@@ -74,7 +91,10 @@ def getResponse(question: str) -> str:
     Question: {question}
     Helpful Answer:"""
 
-    your_prompt = PromptTemplate.from_template(template)
+    your_prompt = PromptTemplate(
+        input_variables=["context", "question"],
+        template=template
+    )
 
     # Execute chain
     qa = ConversationalRetrievalChain.from_llm(
@@ -82,7 +102,6 @@ def getResponse(question: str) -> str:
         combine_docs_chain_kwargs={"prompt": your_prompt},
         retriever=retriever,
         return_source_documents=True,
-        return_generated_question=True,
         memory=memory
     )
 
