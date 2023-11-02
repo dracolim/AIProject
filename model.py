@@ -53,7 +53,7 @@ def getResponse(question: str) -> str:
 
     #detect language (if it is not english, translate to english)
     question = translateToEnglish(question)
-    if (question == "Clear Chat 🧹"):
+    if (question == "New Chat 🧹"):
         #clear memory
         memory.clear()
         return "Chat Cleared! Ask me anything about life in Singapore, or if you need help! \n"
