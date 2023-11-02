@@ -36,9 +36,11 @@ def start(message):
         # markup.add(KeyboardButton('Bengali 🇧🇩'))
 
         # Start bot introduction
-        start_message = "Hello! Ask me anything about life in Singapore, or if you need help! \n"
+        start_message = """
+        Hello! 😊 how may I help you? \n*Please do not include any sensitive information (e.g. NRIC, personal information) when asking questions*
+        """
 
-        bot.send_message(message.chat.id, start_message, reply_markup=markup)
+        bot.send_message(message.chat.id, start_message, reply_markup=markup , parse_mode= 'Markdown') 
 
     except Exception as e:
         bot.send_message(
