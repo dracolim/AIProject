@@ -9,3 +9,4 @@ tabulate
 langid
 deep-translator
 SpeechRecognition==3.10.0
+python-telegram-bot

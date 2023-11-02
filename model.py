@@ -26,16 +26,36 @@ def translateToEnglish(text: str) -> str:
     answer = GoogleTranslator(source=source, target="en").translate(text)
     return answer
 
+def clearChat():
+    memory = ConversationBufferMemory(
+        memory_key="chat_history",
+        return_messages=True,
+        input_key='question',
+        output_key='answer'
+    )
+    return memory
 
 def getResponse(question: str) -> str:
     """
     A repeated implementation of the langchain code in Week 5
     This code is purposely built to be inefficient! 
     Refer to project requirements and Week 5 Lab if you need help
-    """
+    """    
+    #load memory
+    memory = ConversationBufferMemory(
+            memory_key="chat_history",
+            return_messages=True,
+            input_key='question',
+            output_key='answer'
+    )
 
     #detect language (if it is not english, translate to english)
     question = translateToEnglish(question)
+    if (question == "Clear Chat 🧹"):
+        #clear memory
+        memory.clear()
+        return "Chat Cleared! Ask me anything about life in Singapore, or if you need help! \n"
+    
     print(question)
 
     load_dotenv('./.env')

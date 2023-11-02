@@ -5,7 +5,10 @@ import model
 import traceback
 import speech_recognition as sr
 import subprocess
-from telebot import types
+from telebot import *
+from telebot.types import *
+from requests import *
+from telegram.ext import *
 
 load_dotenv()
 
@@ -21,9 +24,13 @@ def start(message):
     Bot will introduce itself upon /start command, and prompt user for his request
     """
     try:
+        markup = ReplyKeyboardMarkup(resize_keyboard=True)
+        markup.add(KeyboardButton('Clear Chat 🧹'))
+
         # Start bot introduction
-        start_message = "Hello! Ask me anything about life in Singapore, or if you need help!"
-        bot.send_message(message.chat.id, start_message)
+        start_message = "Hello! Ask me anything about life in Singapore, or if you need help! \n"
+
+        bot.send_message(message.chat.id, start_message, reply_markup=markup)
 
     except Exception as e:
         bot.send_message(
@@ -76,9 +83,9 @@ def voice_recognizer(language):
     return text
 
 def language_buttons(message):
-    keyboard = types.InlineKeyboardMarkup()
-    button_ru = types.InlineKeyboardButton(text='Russian', callback_data='russian')
-    button_eng = types.InlineKeyboardButton(text='English', callback_data='english')
+    keyboard = InlineKeyboardMarkup()
+    button_ru = InlineKeyboardButton(text='Russian', callback_data='russian')
+    button_eng = InlineKeyboardButton(text='English', callback_data='english')
     keyboard.add(button_ru, button_eng)
     bot.send_message(message.chat.id, 'Please select a voice message language.', reply_markup=keyboard)
 
