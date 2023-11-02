@@ -75,10 +75,15 @@ def language_buttons(voice, call , message):
 def language_callback(call):
     print("gello")
     message = user_data.get(call.from_user.id)
+    if type(message) is str:
+        message = message 
+    else:
+        message = message.text
+
     #get ressponse 
     if call.from_user.id not in response_data:
-        # response = model.getResponse(message.text)
-        response = "As of June/December 2020, there were 687,600 migrant workers in Singapore, excluding foreign domestic workers."
+        response = model.getResponse(message)
+        # response = "As of June/December 2020, there were 687,600 migrant workers in Singapore, excluding foreign domestic workers."
         response_data[call.from_user.id] = response
     else:
         response = response_data.get(call.from_user.id)
