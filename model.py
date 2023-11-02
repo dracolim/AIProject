@@ -68,14 +68,13 @@ def translateToEnglish(text: str) -> str:
     return answer
 
 
-
 def getResponse(question: str) -> str:
     """
     A repeated implementation of the langchain code in Week 5
     This code is purposely built to be inefficient! 
     Refer to project requirements and Week 5 Lab if you need help
     """    
-    
+
     #detect language (if it is not english, translate to english)
     question = translateToEnglish(question)
     if (question == "New Chat 🧹"):
