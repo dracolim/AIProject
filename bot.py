@@ -40,6 +40,8 @@ def start(message):
 @bot.message_handler(content_types=['text'])
 def send_text(message):
     response = model.getResponse(message.text)
+    language_buttons(message)  # buttons for selecting the language of the voice message
+
     bot.send_message(message.chat.id, response)
 
 #voice
@@ -64,6 +66,10 @@ def buttons(call):
         text = voice_recognizer('ru_RU')  # call the function with selected language
         bot.send_message(call.from_user.id, text)  # send the heard text to the user
         _clear()
+    elif call.data == 'bengali':
+        text = voice_recognizer('bn_BD')  # call the function with selected language
+        bot.send_message(call.from_user.id, text)  # send the heard text to the user
+        _clear()
     elif call.data == 'english':
         text = voice_recognizer('en_EN')
         bot.send_message(call.from_user.id, text)
@@ -84,10 +90,13 @@ def voice_recognizer(language):
 
 def language_buttons(message):
     keyboard = InlineKeyboardMarkup()
-    button_ru = InlineKeyboardButton(text='Russian', callback_data='russian')
+    button_bu = InlineKeyboardButton(text='Burmese', callback_data='burmese')
+    button_ta = InlineKeyboardButton(text='Tamil', callback_data='tamil')
+    button_ch = InlineKeyboardButton(text='Russian', callback_data='russian')
+    button_be = InlineKeyboardButton(text='Bengali', callback_data='bengali')
     button_eng = InlineKeyboardButton(text='English', callback_data='english')
-    keyboard.add(button_ru, button_eng)
-    bot.send_message(message.chat.id, 'Please select a voice message language.', reply_markup=keyboard)
+    keyboard.add(button_bu, button_ta, button_ch , button_be , button_eng)
+    bot.send_message(message.chat.id, 'Please select a language you want your answers to convert to', reply_markup=keyboard)
 
 def _clear():
     """Remove unnecessary files"""
@@ -95,12 +104,6 @@ def _clear():
     for _file in _files:
         if os.path.exists(_file):
             os.remove
-
-
-
-
-
-
 
 
 def main():

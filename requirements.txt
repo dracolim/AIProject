@@ -1,6 +1,6 @@
 telebot
 openai
-langchain
+langchain==0.0.327
 python-dotenv
 pypdf
 chromadb

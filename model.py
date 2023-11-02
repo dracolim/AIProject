@@ -4,6 +4,7 @@ import sys
 import numpy as np
 from dotenv import load_dotenv
 from langchain.document_loaders import PyPDFDirectoryLoader
+from langchain.indexes import VectorstoreIndexCreator
 from langchain.memory import ConversationBufferMemory
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings.openai import OpenAIEmbeddings
@@ -35,6 +36,7 @@ def clearChat():
     )
     return memory
 
+
 def getResponse(question: str) -> str:
     """
     A repeated implementation of the langchain code in Week 5
@@ -63,7 +65,8 @@ def getResponse(question: str) -> str:
     OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
     LANGCHAIN_API_KEY = os.getenv('LANGSMITH_API_KEY')
 
-    loader = PyPDFDirectoryLoader("./docs/")
+    loader = PyPDFDirectoryLoader("./docs")
+    index = VectorstoreIndexCreator().from_loaders([loader])
     pages = loader.load()
 
     text_splitter = RecursiveCharacterTextSplitter(
@@ -77,33 +80,25 @@ def getResponse(question: str) -> str:
     # Your experiment can start from this code block which loads the vector store into variable vectordb
     embedding = OpenAIEmbeddings()
 
-    persist_directory = './docs/vectordb'
+    persist_directory = './vectordb'
 
     # Perform embeddings and store the vectors
     vectordb = Chroma.from_documents(
         documents=splits,
-        embedding=embedding,
+        embedding=OpenAIEmbeddings(),
         persist_directory=persist_directory 
     )
 
-    memory = ConversationBufferMemory(
-        memory_key="chat_history",
-        return_messages=True,
-        input_key='question',
-        output_key='answer'
-    )
+    # query it
+    query = "How many migrants are there in singapore?"
+    docs = vectordb.similarity_search(query)
 
-    # Code below will enable tracing so we can take a deeper look into the chain
-    os.environ["LANGCHAIN_TRACING_V2"] = "true"
-    os.environ["LANGCHAIN_ENDPOINT"] = "https://api.langchain.plus"
-    os.environ["LANGCHAIN_PROJECT"] = "Chatbot"
 
-    # Define parameters for retrival
-    retriever=vectordb.as_retriever(search_type="similarity_score_threshold", search_kwargs={"score_threshold": .5, "k": 5})
+    # # Code below will enable tracing so we can take a deeper look into the chain
+    # os.environ["LANGCHAIN_TRACING_V2"] = "true"
+    # os.environ["LANGCHAIN_ENDPOINT"] = "https://api.langchain.plus"
+    # os.environ["LANGCHAIN_PROJECT"] = "Chatbot"
 
-    # Define llm model
-    llm_name = "gpt-3.5-turbo-16k"
-    llm = ChatOpenAI(model_name=llm_name, temperature=0)
     # Define template prompt
     template = """You are a friendly chatbot that helps sad university students cope with their immense stress. 
     Use the following pieces of context to answer the question at the end.
@@ -116,6 +111,13 @@ def getResponse(question: str) -> str:
         template=template
     )
 
+    # Define parameters for retrival
+    llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+    retriever=vectordb.as_retriever(search_type="similarity_score_threshold", search_kwargs={"score_threshold": .8, "k": 5})
+
+    # Define template prompt
+    your_prompt = your_prompt
+
     # Execute chain
     qa = ConversationalRetrievalChain.from_llm(
         llm,
@@ -125,8 +127,9 @@ def getResponse(question: str) -> str:
         memory=memory
     )
 
+
     # Evaluate your chatbot with questions
     result = qa({"question": question})
 
-    print(result)
+    print(result["answer"])
     return result['answer']
