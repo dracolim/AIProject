@@ -15,46 +15,6 @@ from langchain.chains import ConversationalRetrievalChain
 import langid
 from deep_translator import GoogleTranslator
 
-
-#global
-#load memory
-memory = ConversationBufferMemory(
-            memory_key="chat_history",
-            return_messages=True,
-            input_key='question',
-            output_key='answer'
-)
-
-load_dotenv('./.env')
-
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-LANGCHAIN_API_KEY = os.getenv('LANGSMITH_API_KEY')
-
-loader = PyPDFDirectoryLoader("./docs")
-index = VectorstoreIndexCreator().from_loaders([loader])
-pages = loader.load()
-
-text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000,
-        chunk_overlap=150,
-        length_function=len
-)
-
-splits = text_splitter.split_documents(pages)
-
-# Your experiment can start from this code block which loads the vector store into variable vectordb
-embedding = OpenAIEmbeddings()
-
-persist_directory = './vectordb'
-
-# Perform embeddings and store the vectors
-vectordb = Chroma.from_documents(
-        documents=splits,
-        embedding=OpenAIEmbeddings(),
-        persist_directory=persist_directory 
-)
-
-
 # to feed into the LLM model
 def translateToEnglish(text: str) -> str:
     source = langid.classify(text)[0]
@@ -74,16 +34,51 @@ def getResponse(question: str) -> str:
     This code is purposely built to be inefficient! 
     Refer to project requirements and Week 5 Lab if you need help
     """    
+    memory = ConversationBufferMemory(
+            memory_key="chat_history",
+            return_messages=True,
+            input_key='question',
+            output_key='answer'
+    )
 
     #detect language (if it is not english, translate to english)
     question = translateToEnglish(question)
     if (question == "New Chat 🧹"):
         #clear memory
         memory.clear()
-        return "Chat Cleared! Ask me anything about life in Singapore, or if you need help! \n"
-    
+        return "Chat Cleared! Ask me anything about life in Singapore, or any questions! \n"
     print(question)
+    
+    load_dotenv('./.env')
 
+    OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+    LANGCHAIN_API_KEY = os.getenv('LANGSMITH_API_KEY')
+
+    loader = PyPDFDirectoryLoader("./docs")
+    index = VectorstoreIndexCreator().from_loaders([loader])
+    pages = loader.load()
+
+    text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=1000,
+            chunk_overlap=150,
+            length_function=len
+    )
+
+    splits = text_splitter.split_documents(pages)
+
+    # Your experiment can start from this code block which loads the vector store into variable vectordb
+    embedding = OpenAIEmbeddings()
+
+    persist_directory = './vectordb'
+
+    # Perform embeddings and store the vectors
+    vectordb = Chroma.from_documents(
+            documents=splits,
+            embedding=OpenAIEmbeddings(),
+            persist_directory=persist_directory 
+    )
+
+    print(memory)
 
     # # Code below will enable tracing so we can take a deeper look into the chain
     # os.environ["LANGCHAIN_TRACING_V2"] = "true"
@@ -91,11 +86,19 @@ def getResponse(question: str) -> str:
     # os.environ["LANGCHAIN_PROJECT"] = "Chatbot"
 
     # Define template prompt
-    template = """You are a friendly chatbot that helps sad university students cope with their immense stress. 
-    Use the following pieces of context to answer the question at the end.
-    {context}
-    Question: {question}
-    Helpful Answer:"""
+    template = """
+        Act as a friendly chatbot who is trying to help a migrant worker settle down in Singapore and as a chatbot,
+        you are suppose to provide concise and useful answers with sufficient information that can help them based on the questions asked.
+        Response should be concise and easy to understand. Use the following pieces of context to answer the questions.
+        If you don't know the answer or the question is out of context, just say "If I am not able to address your enquiry, you may visit to https://www.healthserve.org.sg/ for more information or contact us at +65 3129 5000", don't try to make up an answer.
+        -----------
+        <ctx>
+        {context}
+        </ctx>
+        -----------
+        Question: {question}
+        Answer:
+    """""
 
     your_prompt = PromptTemplate(
         input_variables=["context", "question"],
@@ -117,6 +120,8 @@ def getResponse(question: str) -> str:
         return_source_documents=True,
         memory=memory
     )
+
+    print(qa)
 
 
     # Evaluate your chatbot with questions

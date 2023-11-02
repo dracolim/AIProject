@@ -10,10 +10,13 @@ from telebot.types import *
 from requests import *
 from telegram.ext import *
 from deep_translator import GoogleTranslator
+from random import seed
+from random import randint
 
 load_dotenv()
 user_data = {}
 response_data = {}
+unique_list = [""]
 
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
@@ -28,13 +31,7 @@ def start(message):
     """
     try:
         markup = ReplyKeyboardMarkup(resize_keyboard=True)
-        markup.add(KeyboardButton('New Chat 🧹 '))
-        # markup.add(KeyboardButton('English 🇬🇧'))
-        # markup.add(KeyboardButton('Mandarin 🇨🇳'))
-        # markup.add(KeyboardButton('Burmese 🇲🇲'))
-        # markup.add(KeyboardButton('Tamil 🇮🇳'))
-        # markup.add(KeyboardButton('Bengali 🇧🇩'))
-
+        markup.add(KeyboardButton("New Chat 🧹"))
         # Start bot introduction
         start_message = """
         Hello! 😊 how may I help you? \n*Please do not include any sensitive information (e.g. NRIC, personal information) when asking questions*
@@ -50,11 +47,15 @@ def start(message):
 @bot.message_handler(content_types=['text'])
 def send_text(message):
     # Store the message object in user_data
-    user_data[message.chat.id] = message
-    
-    #give user option to choose the language first, then call the function to get RESPONSE
-    voice = False
-    language_buttons(voice, ""  , message)  # buttons for selecting the language of the voice message
+    user_data[message.id] = message.text
+    if message.text == "New Chat 🧹":
+        res = model.getResponse(message.text)
+        bot.send_message(message.chat.id, res) 
+    elif message.text != "New Chat 🧹":
+        #give user option to choose the language first, then call the function to get RESPONSE
+        voice = False
+        language_buttons(voice, "" , message)  # buttons for selecting the language of the voice message
+
 
 def language_buttons(voice, call , message):
     keyboard = InlineKeyboardMarkup()
@@ -65,7 +66,7 @@ def language_buttons(voice, call , message):
     button_eng = InlineKeyboardButton(text='English', callback_data='lang_english')
     keyboard.add(button_bu, button_ta, button_ch , button_be , button_eng)
 
-    if (voice == False):
+    if (voice == False): #text
         bot.send_message(message.chat.id, 'Please select a language you want your answers to convert to', reply_markup=keyboard)
     else:
         bot.send_message(call.from_user.id, 'Please select a language you want your answers to convert to', reply_markup=keyboard)
@@ -74,19 +75,21 @@ def language_buttons(voice, call , message):
 @bot.callback_query_handler(func=lambda call: call.data.startswith('lang_'))
 def language_callback(call):
     print("gello")
-    message = user_data.get(call.from_user.id)
-    if type(message) is str:
-        message = message 
-    else:
-        message = message.text
+    message_combinations = call
 
-    #get ressponse 
-    if call.from_user.id not in response_data:
+    if len(str(message_combinations.id)) > 6: #video
+        message_id = call.message.id -1
+        message = user_data[message_id]
+    else: #text
+        message_id = message_combinations.message_id
+        message = message_combinations.text
+
+    if message_id not in response_data and message_id != "":
         response = model.getResponse(message)
-        # response = "As of June/December 2020, there were 687,600 migrant workers in Singapore, excluding foreign domestic workers."
-        response_data[call.from_user.id] = response
+        response_data[message_id] = response
     else:
-        response = response_data.get(call.from_user.id)
+        response = response_data.get(message_id)
+
 
     if call.data == 'lang_burmese':
         ans = GoogleTranslator(source="en", target="my").translate(response)
@@ -152,8 +155,7 @@ def voice_callback(call):
         _clear()
 
     voice = True
-    user_data[call.from_user.id] = text2
-    print(user_data)
+    user_data[call.message.id] = text2
     language_buttons(voice ,call , "")
 
 def voice_recognizer(language):
