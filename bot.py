@@ -85,7 +85,19 @@ def language_callback(call):
         message = message_combinations.text
 
     if message_id not in response_data and message_id != "":
+        bot.send_message(call.from_user.id, "⏱️ Give me a moment ...")
+
+        # Simulate a loading bar by sending a sequence of messages
+        for i in range(1, 11):  # Assuming 10 steps in the loading bar
+            progress = "▓" * i + "░" * (10 - i)
+            if i // 2 == 0:
+                bot.send_message(call.from_user.id, f"⌛ Progress: {progress}")
+            else:
+                bot.send_message(call.from_user.id, f"⏳ Progress: {progress}")
+            time.sleep(3.5)  # Adjust the sleep time as needed
+
         response = model.getResponse(message)
+        # response = "temp ans for testing"
         response_data[message_id] = response
     else:
         response = response_data.get(message_id)

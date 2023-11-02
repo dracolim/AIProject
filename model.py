@@ -88,8 +88,8 @@ def getResponse(question: str) -> str:
     # Define template prompt
     template = """
         Act as a friendly chatbot who is trying to help a migrant worker settle down in Singapore and as a chatbot,
-        you are suppose to provide concise and useful answers with sufficient information that can help them based on the questions asked.
-        Response should be concise and easy to understand. Use the following pieces of context to answer the questions.
+        you are suppose to provide concise, substantial, useful and easy to understand answers with sufficient information that can help them.
+        Use the following pieces of context to answer the questions.
         If you don't know the answer or the question is out of context, just say "If I am not able to address your enquiry, you may visit to https://www.healthserve.org.sg/ for more information or contact us at +65 3129 5000", don't try to make up an answer.
         -----------
         <ctx>
@@ -120,9 +120,6 @@ def getResponse(question: str) -> str:
         return_source_documents=True,
         memory=memory
     )
-
-    print(qa)
-
 
     # Evaluate your chatbot with questions
     result = qa({"question": question})
