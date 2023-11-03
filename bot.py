@@ -22,6 +22,13 @@ TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
 bot = telebot.TeleBot(TOKEN)
 bot.set_webhook()
+WEBHOOK_HOST = 'aih-telebot-2aba1e09532a.herokuapp.com/'
+WEBHOOK_PORT = int(os.environ.get('PORT', 5000))
+WEBHOOK_LISTEN = '0.0.0.0'
+
+WEBHOOK_URL_BASE = "https://%s:%s" % (WEBHOOK_HOST, WEBHOOK_PORT)
+WEBHOOK_URL_PATH = "/%s/" % (TOKEN)
+
 r = sr.Recognizer()
 
 @bot.message_handler(commands=['start'])
@@ -50,6 +57,8 @@ def send_text(message):
     user_data[message.id] = message.text
     if message.text == "New Chat 🧹":
         res = model.getResponse(message.text)
+        # hard code response
+
         bot.send_message(message.chat.id, res) 
     elif message.text != "New Chat 🧹":
         #give user option to choose the language first, then call the function to get RESPONSE
@@ -205,6 +214,7 @@ def main():
     """Runs the Telegram Bot"""
     print('Loading configuration...') # Perhaps an idea on what you may want to change (optional)
     print('Successfully loaded! Starting bot...')
+
     bot.infinity_polling()
 
 
