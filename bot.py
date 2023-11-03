@@ -103,7 +103,7 @@ def language_callback(call):
                 bot.send_message(call.from_user.id, f"⌛ Progress: {progress}")
             else:
                 bot.send_message(call.from_user.id, f"⏳ Progress: {progress}")
-            time.sleep(8.5)  # Adjust the sleep time as needed
+            time.sleep(12)  # Adjust the sleep time as needed
 
         response = model.getResponse(message)
         # response = "temp ans for testing"

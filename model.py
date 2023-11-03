@@ -79,8 +79,6 @@ def getResponse(question: str) -> str:
             persist_directory=persist_directory 
     )
 
-    print(memory)
-
     # # Code below will enable tracing so we can take a deeper look into the chain
     # os.environ["LANGCHAIN_TRACING_V2"] = "true"
     # os.environ["LANGCHAIN_ENDPOINT"] = "https://api.langchain.plus"
@@ -108,7 +106,7 @@ def getResponse(question: str) -> str:
 
     # Define parameters for retrival
     llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
-    retriever=vectordb.as_retriever(search_type="similarity_score_threshold", search_kwargs={"score_threshold": .8, "k": 5})
+    retriever=vectordb.as_retriever(search_type="similarity_score_threshold", search_kwargs={"score_threshold": .5, "k": 5})
 
     # Define template prompt
     your_prompt = your_prompt
