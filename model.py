@@ -14,6 +14,7 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import ConversationalRetrievalChain
 import langid
 from deep_translator import GoogleTranslator
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
 
 # to feed into the LLM model
@@ -105,7 +106,7 @@ def getResponse(question: str) -> str:
     )
 
     # Define parameters for retrival
-    llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+    llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0 , streaming=True, callbacks=[StreamingStdOutCallbackHandler()], )
     retriever=vectordb.as_retriever(search_type="similarity_score_threshold", search_kwargs={"score_threshold": .5, "k": 5})
 
     # Define template prompt

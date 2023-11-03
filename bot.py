@@ -97,8 +97,8 @@ def language_callback(call):
         bot.send_message(call.from_user.id, "⏱️ Give me a moment ...")
 
         # Simulate a loading bar by sending a sequence of messages
-        for i in range(1, 6):  # Assuming 10 steps in the loading bar
-            progress = "▓" * i + "░" * (5 - i)
+        for i in range(1, 9):  # Assuming 10 steps in the loading bar
+            progress = "▓" * i + "░" * (8 - i)
             if i // 2 == 0:
                 bot.send_message(call.from_user.id, f"⌛ Progress: {progress}")
             else:
