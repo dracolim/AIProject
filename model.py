@@ -15,36 +15,6 @@ from langchain.chains import ConversationalRetrievalChain
 import langid
 from deep_translator import GoogleTranslator
 
-#GLOBAL LOADER SPLITTER
-load_dotenv('./.env')
-
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-LANGCHAIN_API_KEY = os.getenv('LANGSMITH_API_KEY')
-
-loader = PyPDFDirectoryLoader("./docs")
-index = VectorstoreIndexCreator().from_loaders([loader])
-pages = loader.load()
-
-text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=1000,
-            chunk_overlap=150,
-            length_function=len
-)
-
-splits = text_splitter.split_documents(pages)
-
-# Your experiment can start from this code block which loads the vector store into variable vectordb
-embedding = OpenAIEmbeddings()
-
-persist_directory = './vectordb'
-
-# Perform embeddings and store the vectors
-vectordb = Chroma.from_documents(
-            documents=splits,
-            embedding=OpenAIEmbeddings(),
-            persist_directory=persist_directory 
-)
-
 
 # to feed into the LLM model
 def translateToEnglish(text: str) -> str:
@@ -80,6 +50,36 @@ def getResponse(question: str) -> str:
         return "Chat Cleared! Ask me anything about life in Singapore, or any questions! \n"
     print(question)
     
+    load_dotenv('./.env')
+
+    OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+    LANGCHAIN_API_KEY = os.getenv('LANGSMITH_API_KEY')
+
+    loader = PyPDFDirectoryLoader("./docs")
+    index = VectorstoreIndexCreator().from_loaders([loader])
+    pages = loader.load()
+
+    text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=1000,
+            chunk_overlap=150,
+            length_function=len
+    )
+
+    splits = text_splitter.split_documents(pages)
+
+    # Your experiment can start from this code block which loads the vector store into variable vectordb
+    embedding = OpenAIEmbeddings()
+
+    persist_directory = './vectordb'
+
+    # Perform embeddings and store the vectors
+    vectordb = Chroma.from_documents(
+            documents=splits,
+            embedding=OpenAIEmbeddings(),
+            persist_directory=persist_directory 
+    )
+
+    print(memory)
 
     # # Code below will enable tracing so we can take a deeper look into the chain
     # os.environ["LANGCHAIN_TRACING_V2"] = "true"
