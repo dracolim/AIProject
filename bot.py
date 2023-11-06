@@ -403,9 +403,9 @@ def language_buttons_voice(message):
     button_be = InlineKeyboardButton(text='Bengali', callback_data='voice_bengali')
     button_eng = InlineKeyboardButton(text='English', callback_data='voice_english')
     keyboard.add(button_bu, button_ta, button_ch , button_be , button_eng)
-    bot.send_message(message.chat.id, 'Please select the voice message language.', reply_markup=keyboard)
+    message3 = bot.send_message(message.chat.id, 'Please select the voice message language.', reply_markup=keyboard)
 
-    message_id = message.id
+    message_id = message3.message_id
     chat_id = message.chat.id
     all_messages[message_id] = chat_id
 
