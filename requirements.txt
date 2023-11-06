@@ -10,5 +10,6 @@ langid
 deep-translator
 SpeechRecognition==3.10.0
 python-telegram-bot
+git+https://github.com/Rapptz/discord.py
 ffmpeg
 ffmpeg-python
