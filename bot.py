@@ -74,6 +74,8 @@ others_FAQ = """
 Migrant workers may face barriers such as cultural and language differences, financial constraints, lack of knowledge about the healthcare system, limited healthcare coverage, social and structural barriers, and work-related barriers such as long working hours.\n\n
 """
 
+#saved messages
+saved_messages = []
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -97,13 +99,33 @@ def start(message):
         c1 = BotCommand(command='start', description='Start the Bot')
         c2 = BotCommand(command='faq', description='Commonly asked questions and answers')
         c3 = BotCommand(command='newchat', description='Start a new chat')
+        c4 = BotCommand(command='saved', description='Saved responses')
         bot.set_my_commands([c1,c2,c3])
         bot.set_chat_menu_button(message.chat.id, MenuButtonCommands('commands'))
         
     except Exception as e:
         bot.send_message(message.chat.id, 'Sorry, something seems to gone wrong! Please try again later!')
-        
 
+#save messages
+@bot.message_handler(commands=['saved'])
+def commonFAQ(message):
+    try:
+        all_messages = ""
+        for each in saved_messages:
+            all_messages += each + "\n\n"
+        
+        message3 = bot.send_message(message.chat.id, all_messages , parse_mode= 'Markdown')
+
+        message_id = message3.message_id
+        chat_id = message.chat.id
+            
+        all_messages[message_id] = chat_id
+        
+    except Exception as e:
+        bot.send_message(
+            message.chat.id, 'Sorry, something seems to gone wrong! Please try again later!')
+
+#FaQs
 @bot.message_handler(commands=['faq'])
 def commonFAQ(message):
     try:
@@ -160,7 +182,7 @@ def commonFAQ(message):
 def send_text(message):
     # Store the message object in user_data
     user_data[message.id] = message.text
-    
+
     isItVoice = True
     if message.text == "🧠 Mental Health":
         message3 = bot.send_message(message.chat.id, mental_health_FAQ, parse_mode= 'Markdown')
@@ -184,7 +206,6 @@ def send_text(message):
     if isItVoice == True:
         message_id = message3.message_id
         chat_id = message.chat.id
-
         all_messages[message_id] = chat_id
 
 
@@ -233,6 +254,20 @@ def printLoading(call):
         chat_id =  call.from_user.id
         all_messages[message_id2] = chat_id
 
+@bot.callback_query_handler(func=lambda call: call.data.startswith('save'))
+def save_callback(call):
+    print("item is saved")
+
+    # save message to global saved_messages
+    saved_messages.append(call.message.text)
+    message3  = bot.send_message(call.from_user.id, "Message saved!")
+
+    message_id =  message3.message_id
+    chat_id =  call.from_user.id
+
+    all_messages[message_id] = chat_id
+
+
 @bot.callback_query_handler(func=lambda call: call.data.startswith('lang_'))
 def language_callback(call):
     print("gello")
@@ -245,10 +280,10 @@ def language_callback(call):
         message_id = message_combinations.message_id
         message = message_combinations.text
 
-    if message_id not in response_data and message_id != "":
+    if message_id not in response_data and message_id != "": #text
         response = model.getResponse(message)
         response_data[message_id] = response
-    else:
+    else: #voice
         response = response_data.get(message_id)
 
 
@@ -355,7 +390,19 @@ def language_buttons_voice(message):
     message_id = message.id
     chat_id = message.chat.id
     all_messages[message_id] = chat_id
-        
+
+
+def save_button(message):
+    keyboard = types.InlineKeyboardMarkup()
+    button_save = InlineKeyboardButton(text='📍 Save Message', callback_data='save')
+
+    keyboard.add(button_save)
+    bot.send_message(message.chat.id, 'Please select the voice message language.', reply_markup=keyboard)
+
+    message_id = message.id
+    chat_id = message.chat.id
+    all_messages[message_id] = chat_id
+
 
 def _clear():
     """Remove unnecessary files"""
