@@ -83,6 +83,10 @@ def start(message):
     Bot will introduce itself upon /start command, and prompt user for his request
     """
     try:
+        message_id = message.id
+        chat_id = message.chat.id
+        all_messages[message_id] = chat_id
+
         # Start bot introduction
         start_message = """
         Hello! 😊 how may I help you? \n*❗️Please do not include any sensitive information (e.g. NRIC, personal information) when asking questions*\n\n📋 Commands: \n/start - To start the bot\n/faq - Commonly asked questions and answers\n/newchat - Start a new chat
@@ -100,6 +104,8 @@ def start(message):
         c2 = BotCommand(command='faq', description='Commonly asked questions and answers')
         c3 = BotCommand(command='newchat', description='Start a new chat')
         c4 = BotCommand(command='saved', description='Saved responses')
+
+
         bot.set_my_commands([c1,c2,c3])
         bot.set_chat_menu_button(message.chat.id, MenuButtonCommands('commands'))
         
@@ -129,6 +135,10 @@ def commonFAQ(message):
 @bot.message_handler(commands=['faq'])
 def commonFAQ(message):
     try:
+        message_id = message.id
+        chat_id = message.chat.id
+        all_messages[message_id] = chat_id
+
         markup = ReplyKeyboardMarkup(resize_keyboard=True)
         markup.row(KeyboardButton("🧠 Mental Health"), KeyboardButton("🦷 Dental"))
         markup.row(KeyboardButton("🤕 Injury"), KeyboardButton("🩺 Medical Health"))
@@ -152,10 +162,14 @@ def commonFAQ(message):
 @bot.message_handler(commands=['newchat'])
 def commonFAQ(message):
     try:
+        message_id = message.id
+        chat_id = message.chat.id
+        all_messages[message_id] = chat_id
+
         #calling response model
         res = model.getResponse("new chat")
 
-        message3 = bot.send_message(message.chat.id, res)
+        message3 = bot.send_message(message.chat.id, res , parse_mode="Markdown")
 
         message_id = message3.id
         chat_id = message.chat.id
@@ -182,6 +196,10 @@ def commonFAQ(message):
 def send_text(message):
     # Store the message object in user_data
     user_data[message.id] = message.text
+
+    message_id = message.id
+    chat_id = message.chat.id
+    all_messages[message_id] = chat_id
 
     isItVoice = True
     if message.text == "🧠 Mental Health":

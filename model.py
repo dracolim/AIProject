@@ -48,7 +48,7 @@ def getResponse(question: str) -> str:
     if (question == "new chat"):
         #clear memory
         memory.clear()
-        return "Chat Cleared! Ask me anything about life in Singapore, or any questions! \n"
+        return "✔️ Chat Cleared! Click on *start* to start a converation \n"
     print(question)
 
 
