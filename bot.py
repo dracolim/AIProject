@@ -158,6 +158,9 @@ def commonFAQ(message):
 #text
 @bot.message_handler(content_types=['text'])
 def send_text(message):
+    # Store the message object in user_data
+    user_data[message.id] = message.text
+    
     isItVoice = True
     if message.text == "🧠 Mental Health":
         message3 = bot.send_message(message.chat.id, mental_health_FAQ, parse_mode= 'Markdown')
@@ -235,7 +238,7 @@ def language_callback(call):
     print("gello")
     message_combinations = call
 
-    if len(str(message_combinations.id)) > 6: #video
+    if len(str(message_combinations.id)) > 6: 
         message_id = call.message.id -1
         message = user_data[message_id]
     else: #text

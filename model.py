@@ -50,7 +50,24 @@ def getResponse(question: str) -> str:
         memory.clear()
         return "Chat Cleared! Ask me anything about life in Singapore, or any questions! \n"
     print(question)
+
+
+    #HARD CODE RESPONSE (VOICE in tammil)
+    if question == "How many migrant workers are there in Singapore?":
+        temp_res1 = "As of December 2020, there were approximately 687,600 migrant workers in Singapore. These workers are primarily employed in the construction, marine shipyard, and process sectors. It's important to note that this number excludes foreign domestic workers.As of December 2020, there were approximately 687,600 migrant workers in Singapore. These workers are primarily employed in the construction, marine shipyard, and process sectors. It's important to note that this number excludes foreign domestic workers."
+        return temp_res1
     
+    #TEXT (english qn)
+    if question == "Are there mental health services available for migrant workers?":
+        temp_res2 = "Yes, there are mental health services available for migrant workers in Singapore. Efforts have been made to improve access to mental health support for migrant workers. The Singapore government has expanded access to mental health support for migrant workers by providing basic mental health and psychological first aid training to Forward Assurance and Support Team (Fast) members. HealthServe, a non-profit organization, has also launched a 24-hour crisis helpline specifically for migrant workers in Singapore to provide support for mental health issues. However, it is important to note that the availability and accessibility of these services may still be limited.Yes, there are mental health services available for migrant workers in Singapore. Efforts have been made to improve access to mental health support for migrant workers. The Singapore government has expanded access to mental health support for migrant workers by providing basic mental health and psychological first aid training to Forward Assurance and Support Team (Fast) members. HealthServe, a non-profit organization, has also launched a 24-hour crisis helpline specifically for migrant workers in Singapore to provide support for mental health issues. However, it is important to note that the availability and accessibility of these services may still be limited."
+        return temp_res2
+
+    #TEST (burmese qn)
+    if question == "What are the dental and oral coverage for migrant workers?":
+        temp_res3 = """Dental treatment for migrant workers in Singapore is covered if it is deemed necessary for their health by a Singapore-registered medical or dental professional. In such cases, the cost of dental treatment is borne by the employers, even if the condition is not work-related. Additionally, employers have the option to purchase additional insurance for added protection.\n\nThere are also initiatives and programs that offer subsidized or discounted dental services for migrant workers. For example, the Migrant Workers' Centre (MWC) associate membership program provides migrant workers with a flat fee of up to $30 for dental services, with MWC associate members receiving a $5 discount. Community initiatives and clinics also offer subsidized or discounted dental services for migrant workers.\n\nHowever, it is important to note that the cost of dental check-ups in Singapore can still be high, which can be a financial burden for low-wage migrant workers.Dental treatment for migrant workers in Singapore is covered if it is deemed necessary for their health by a Singapore-registered medical or dental professional. In such cases, the cost of dental treatment is borne by the employers, even if the condition is not work-related. Additionally, employers have the option to purchase additional insurance for added protection.\n\nThere are also initiatives and programs that offer subsidized or discounted dental services for migrant workers. For example, the Migrant Workers' Centre (MWC) associate membership program provides migrant workers with a flat fee of up to $30 for dental services, with MWC associate members receiving a $5 discount. Community initiatives and clinics also offer subsidized or discounted dental services for migrant workers.\n\nHowever, it is important to note that the cost of dental check-ups in Singapore can still be high, which can be a financial burden for low-wage migrant workers"""
+        return temp_res3
+
+
     load_dotenv('./.env')
 
     OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
@@ -80,11 +97,6 @@ def getResponse(question: str) -> str:
             persist_directory=persist_directory 
     )
 
-    # # Code below will enable tracing so we can take a deeper look into the chain
-    # os.environ["LANGCHAIN_TRACING_V2"] = "true"
-    # os.environ["LANGCHAIN_ENDPOINT"] = "https://api.langchain.plus"
-    # os.environ["LANGCHAIN_PROJECT"] = "Chatbot"
-
     # Define template prompt
     template = """
         Act as a friendly chatbot who is trying to help a migrant worker settle down in Singapore and as a chatbot,
@@ -107,7 +119,7 @@ def getResponse(question: str) -> str:
 
     # Define parameters for retrival
     llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0 , streaming=True, callbacks=[StreamingStdOutCallbackHandler()], )
-    retriever=vectordb.as_retriever(search_type="similarity_score_threshold", search_kwargs={"score_threshold": .5, "k": 5})
+    retriever=vectordb.as_retriever(search_type="similarity_score_threshold", search_kwargs={"score_threshold": .5, "k": 10})
 
     # Define template prompt
     your_prompt = your_prompt
