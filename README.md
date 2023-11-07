@@ -8,12 +8,12 @@
 Potter is a compassionate and helpful telegram chatbot designed to serve as a friendly assistant, offering invaluable support to migrant workers as they adapt to life in Singapore. With a wealth of knowledge and resources at its virtual fingertips, Potter excels at providing migrant workers with essential information on a wide range of topics, from medical health coverage to general inquiries. Whether it's addressing healthcare concerns or answering everyday questions, Potter is committed to guiding and assisting migrant workers on their journey in Singapore.
 
 ## Run Application
-<b> To use the bot </b>
+** To use the bot **
 1. Go to telegram App
 2. Search telegram username @IWillHelpYouBot
 3. Good to go!
 </br>
-<b> To run Locally </b>
+** To run Locally **
 1. Install dependencies
 ```
   pip install -r requirements.txt
@@ -22,6 +22,7 @@ Potter is a compassionate and helpful telegram chatbot designed to serve as a fr
 ```
   python bot.py
 ```
+
 ## Features
 - Commands </br>
 <img width="509" alt="Screenshot 2023-11-07 at 2 24 44 PM" src="https://github.com/dracolim/AIProject/assets/85498185/3a36bd4e-96ec-467b-b6ca-2d3b861798ea"> </br>
