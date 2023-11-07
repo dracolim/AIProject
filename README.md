@@ -1,5 +1,8 @@
 
 # AI & Humanity Project (G2T5)
+![example workflow](https://img.shields.io/badge/Build%20in-Python-blue)
+![example workflow](https://img.shields.io/badge/Deployed%20in-Heroku-green)
+![example workflow](https://img.shields.io/badge/LLM%20Langchain-red)
 <p align="center">
 <img width="138" alt="Screenshot 2023-11-07 at 1 49 25 PM" src="https://github.com/dracolim/AIProject/assets/85498185/d156137d-d222-4a32-8b27-c410eb181c67">
 </p>
