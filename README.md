@@ -12,7 +12,6 @@ Potter is a compassionate and helpful telegram chatbot designed to serve as a fr
 1. Go to telegram App
 2. Search telegram username @IWillHelpYouBot
 3. Good to go!
-</br>
 **To run Locally**
 1. Install dependencies
 ```
