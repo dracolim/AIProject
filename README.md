@@ -35,14 +35,15 @@ Successfully loaded! Starting bot...
   2. ```/faq``` - To retrieve common asked FAQs
   3. ```/newchat``` - To start a new chat and clear chat history
 - Text
-    - Users can type in their questions to the bot and responses will be generated
+    - Users can input their questions for the bot and the bot will generate responses
 - Voice to Text
-    - Users can record their voice to ask the bot questions
-    - The bot will be able to detect their voice and convert it to text , which will be fed into the Langchain Language Model to generate  responses
-- Translate to other languages
-   - Generated responses from the LLM can be translated to other langauges
-   - Users can select out of th 5 options (English, Burmese, Tamil, Mandarin, Bengali) they wish to translate their responses to
+    - Users can record their voice to ask questions to the bot
+    - It can detect their voicse and convert it to text , which will be fed into the Langchain Language Model to generate responses
+- Translate to different languages
+   - Generated responses from the LLM can be translated to various langauges
+   - Users can chooses from the 5 options (English, Burmese, Tamil, Mandarin, Bengali) they wish to translate their responses
 - Application is deployed on Heroku
+  - The application is hosted and deployed on Heroku
 
 ## Resources
 
