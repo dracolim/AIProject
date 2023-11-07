@@ -17,8 +17,8 @@ Potter is a compassionate and helpful telegram chatbot designed to serve as a fr
   python bot.py
 ```
 ## Features
-- Commands
-  <img width="509" alt="Screenshot 2023-11-07 at 2 24 44 PM" src="https://github.com/dracolim/AIProject/assets/85498185/3a36bd4e-96ec-467b-b6ca-2d3b861798ea"> &nbsp;
+  <img width="509" alt="Screenshot 2023-11-07 at 2 24 44 PM" src="https://github.com/dracolim/AIProject/assets/85498185/3a36bd4e-96ec-467b-b6ca-2d3b861798ea">
+  - Commands
   1. To start the bot
      ```/start```
   2. To retrieve common asked FAQs
