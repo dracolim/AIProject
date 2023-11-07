@@ -16,17 +16,24 @@ Potter is a compassionate and helpful telegram chatbot designed to serve as a fr
 ```
   python bot.py
 ```
-
 ## Features
-
+- Commands
+  <img width="509" alt="Screenshot 2023-11-07 at 2 24 44 PM" src="https://github.com/dracolim/AIProject/assets/85498185/3a36bd4e-96ec-467b-b6ca-2d3b861798ea"> <br>
+  1. To start the bot
+     ```/start```
+  2. To retrieve common asked FAQs
+     ```/faq```
+  3. To start a new chat and clear chat history
+     ```/newchat```
+- Text
+    - Users can type in their questions to the bot and responses will be generated
 - Voice to Text
     - Users can record their voice to ask the bot questions
-    - The bot will be able to detect their voice an convert it to text , which will feed it into the Langchain Language Model to generate the responses
-- Fullscreen mode
-- Cross platform
-
+    - The bot will be able to detect their voice and convert it to text , which will be fed into the Langchain Language Model to generate  responses
+- Translate to other languages
+   - Generated responses from the LLM can be translated to other langauges
+   - Users can select out of th 5 options (English, Burmese, Tamil, Mandarin, Bengali) they wish to translate their responses to
 - Application is deployed on Heroku
-
 
 ## Resources
 
