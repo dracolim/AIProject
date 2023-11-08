@@ -3,7 +3,7 @@
 ![example workflow](https://img.shields.io/badge/Deployed%20in-Heroku-green)
 ![example workflow](https://img.shields.io/badge/LLM%20Langchain-red)
 <p align="center">
-<img width="138" alt="Screenshot 2023-11-07 at 1 49 25 PM" src="https://github.com/dracolim/AIProject/assets/85498185/d156137d-d222-4a32-8b27-c410eb181c67">
+<img width="140" alt="Screenshot 2023-11-08 at 5 49 23 PM" src="https://github.com/dracolim/AIProject/assets/85498185/8ced2cc9-6af0-4672-a221-3bc0b8dd3d91">
 </p>
 
 ### Meet Potter the Chatbot
@@ -35,19 +35,20 @@ Successfully loaded! Starting bot...
 <img width="509" alt="Screenshot 2023-11-07 at 2 24 44 PM" src="https://github.com/dracolim/AIProject/assets/85498185/3a36bd4e-96ec-467b-b6ca-2d3b861798ea"> </br>
   1. ```/start``` - To start the bot
   2. ```/faq``` - To retrieve common asked FAQs </br>
-     <img width="500" alt="Screenshot 2023-11-08 at 5 32 46 PM" src="https://github.com/dracolim/AIProject/assets/85498185/75b2c4fa-be1a-4e7a-8132-2d13ddca5e6a">
+     <img width="500" alt="Screenshot 2023-11-08 at 5 55 33 PM" src="https://github.com/dracolim/AIProject/assets/85498185/2c0e3133-94ec-4e75-9797-ff84f4064547">
   4. ```/newchat``` - To start a new chat and clear chat history </br>
-     <img width="500" alt="Screenshot 2023-11-08 at 5 33 04 PM" src="https://github.com/dracolim/AIProject/assets/85498185/a07b600d-50da-4a12-a360-c6279eae60d9">
+     <img width="500" alt="Screenshot 2023-11-08 at 5 56 24 PM" src="https://github.com/dracolim/AIProject/assets/85498185/dc64f729-fc7d-49b6-8d97-62519ee07b0c">
 - Text
     - Users can input their questions for the bot and the bot will generate responses
+      <img width="500" alt="Screenshot 2023-11-08 at 5 50 47 PM" src="https://github.com/dracolim/AIProject/assets/85498185/ea632bd7-5982-4178-977f-a8c5714f04e1">
 - Voice to Text
     - Users can record their voice to ask questions to the bot
     - It can detect their voicse and convert it to text , which will be fed into the Langchain Language Model to generate responses
-      <img width="500" alt="Screenshot 2023-11-08 at 5 32 22 PM" src="https://github.com/dracolim/AIProject/assets/85498185/e210f6c2-19a2-4f01-b2ee-e5ed74987779">
+      <img width="500" alt="Screenshot 2023-11-08 at 5 54 39 PM" src="https://github.com/dracolim/AIProject/assets/85498185/06392ba1-367c-489d-ac3b-1bc2bd26fbdb">
 - Translate to different languages
    - Generated responses from the LLM can be translated to various langauges
    - Users can chooses from the 5 options (English, Burmese, Tamil, Mandarin, Bengali) they wish to translate their responses
-     <img width="500" alt="Screenshot 2023-11-08 at 5 30 28 PM" src="https://github.com/dracolim/AIProject/assets/85498185/52f73068-9d10-448b-8f60-0717704e0c44">
+     <img width="500" alt="Screenshot 2023-11-08 at 5 51 41 PM" src="https://github.com/dracolim/AIProject/assets/85498185/121c1bba-d975-429e-978d-e88995eba968">
 - Application is deployed on Heroku
   - The application is hosted and deployed on Heroku
 
