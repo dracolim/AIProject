@@ -1,4 +1,4 @@
-
+<img width="939" alt="Screenshot 2023-11-08 at 5 30 28 PM" src="https://github.com/dracolim/AIProject/assets/85498185/82190913-61fa-416b-8393-6da0283b3daa">
 # AI & Humanity Project (G2T5)
 ![example workflow](https://img.shields.io/badge/Build%20in-Python-blue)
 ![example workflow](https://img.shields.io/badge/Deployed%20in-Heroku-green)
@@ -36,20 +36,23 @@ Successfully loaded! Starting bot...
 <img width="509" alt="Screenshot 2023-11-07 at 2 24 44 PM" src="https://github.com/dracolim/AIProject/assets/85498185/3a36bd4e-96ec-467b-b6ca-2d3b861798ea"> </br>
   1. ```/start``` - To start the bot
   2. ```/faq``` - To retrieve common asked FAQs
-  3. ```/newchat``` - To start a new chat and clear chat history
+     <img width="500" alt="Screenshot 2023-11-08 at 5 32 46 PM" src="https://github.com/dracolim/AIProject/assets/85498185/75b2c4fa-be1a-4e7a-8132-2d13ddca5e6a">
+  4. ```/newchat``` - To start a new chat and clear chat history
+     <img width="500" alt="Screenshot 2023-11-08 at 5 33 04 PM" src="https://github.com/dracolim/AIProject/assets/85498185/a07b600d-50da-4a12-a360-c6279eae60d9">
 - Text
     - Users can input their questions for the bot and the bot will generate responses
 - Voice to Text
     - Users can record their voice to ask questions to the bot
     - It can detect their voicse and convert it to text , which will be fed into the Langchain Language Model to generate responses
+      <img width="500" alt="Screenshot 2023-11-08 at 5 32 22 PM" src="https://github.com/dracolim/AIProject/assets/85498185/e210f6c2-19a2-4f01-b2ee-e5ed74987779">
 - Translate to different languages
    - Generated responses from the LLM can be translated to various langauges
    - Users can chooses from the 5 options (English, Burmese, Tamil, Mandarin, Bengali) they wish to translate their responses
+     <img width="500" alt="Screenshot 2023-11-08 at 5 30 28 PM" src="https://github.com/dracolim/AIProject/assets/85498185/52f73068-9d10-448b-8f60-0717704e0c44">
 - Application is deployed on Heroku
   - The application is hosted and deployed on Heroku
 
 ## Resources
-
 - [TelegramBot Documentation](https://pypi.org/project/pyTelegramBotAPI/)
 - [Langchain Documentation](https://python.langchain.com/docs/get_started/introduction)
 
