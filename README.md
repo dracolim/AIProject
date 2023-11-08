@@ -34,9 +34,9 @@ Successfully loaded! Starting bot...
 - Commands </br>
 <img width="509" alt="Screenshot 2023-11-07 at 2 24 44 PM" src="https://github.com/dracolim/AIProject/assets/85498185/3a36bd4e-96ec-467b-b6ca-2d3b861798ea"> </br>
   1. ```/start``` - To start the bot
-  2. ```/faq``` - To retrieve common asked FAQs
+  2. ```/faq``` - To retrieve common asked FAQs </br>
      <img width="500" alt="Screenshot 2023-11-08 at 5 32 46 PM" src="https://github.com/dracolim/AIProject/assets/85498185/75b2c4fa-be1a-4e7a-8132-2d13ddca5e6a">
-  4. ```/newchat``` - To start a new chat and clear chat history
+  4. ```/newchat``` - To start a new chat and clear chat history </br>
      <img width="500" alt="Screenshot 2023-11-08 at 5 33 04 PM" src="https://github.com/dracolim/AIProject/assets/85498185/a07b600d-50da-4a12-a360-c6279eae60d9">
 - Text
     - Users can input their questions for the bot and the bot will generate responses
