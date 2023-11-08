@@ -1,4 +1,3 @@
-<img width="939" alt="Screenshot 2023-11-08 at 5 30 28 PM" src="https://github.com/dracolim/AIProject/assets/85498185/82190913-61fa-416b-8393-6da0283b3daa">
 # AI & Humanity Project (G2T5)
 ![example workflow](https://img.shields.io/badge/Build%20in-Python-blue)
 ![example workflow](https://img.shields.io/badge/Deployed%20in-Heroku-green)
