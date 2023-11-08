@@ -32,7 +32,7 @@ Successfully loaded! Starting bot...
 
 ## Features
 - Commands </br>
-<img width="500" alt="Screenshot 2023-11-08 at 5 57 49 PM" src="https://github.com/dracolim/AIProject/assets/85498185/c8e2e595-2793-4808-90d8-013375cd8872"> </br>
+<img width="500" alt="Screenshot 2023-11-08 at 5 59 00 PM" src="https://github.com/dracolim/AIProject/assets/85498185/54c2dbb3-a208-448e-8ae3-30636a3b3beb"> </br>
   1. ```/start``` - To start the bot
   2. ```/faq``` - To retrieve common asked FAQs </br>
      <img width="500" alt="Screenshot 2023-11-08 at 5 55 33 PM" src="https://github.com/dracolim/AIProject/assets/85498185/2c0e3133-94ec-4e75-9797-ff84f4064547">
