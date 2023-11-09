@@ -52,7 +52,7 @@ def getResponse(question: str) -> str:
     print(question)
 
 
-    #HARD CODE RESPONSE (VOICE in tammil)
+    #HARD CODE RESPONSE FOR DEMO (VOICE in tammil)
     if question == "How many migrant workers are there in Singapore?":
         temp_res1 = "As of December 2020, there were approximately 687,600 migrant workers in Singapore. These workers are primarily employed in the construction, marine shipyard, and process sectors. It's important to note that this number excludes foreign domestic workers.As of December 2020, there were approximately 687,600 migrant workers in Singapore. These workers are primarily employed in the construction, marine shipyard, and process sectors. It's important to note that this number excludes foreign domestic workers."
         return temp_res1
