@@ -1,4 +1,4 @@
-# AI & Humanity Project (G2T5)
+# Potter
 ![example workflow](https://img.shields.io/badge/Build%20in-Python-blue)
 ![example workflow](https://img.shields.io/badge/Deployed%20in-Heroku-green)
 ![example workflow](https://img.shields.io/badge/LLM%20Langchain-red)
